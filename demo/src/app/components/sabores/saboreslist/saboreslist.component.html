@@ -1,0 +1,48 @@
+<div class="container">
+    <h3 class="alert alert-primary">Listagem de sabores!</h3>
+     <button *ngIf="!modoLancamento" type="button" class="btn btn-primary" (click)="adicionar(modal1)">Adicionar</button>
+    <div class="row">
+        <div class="col-lg-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                      <th *ngIf="modoLancamento" scope="col">#</th>
+                      <th scope="col">#ID</th>
+                      <th scope="col">Nome</th>
+                        <th *ngIf="!modoLancamento" scope="col">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let sabor of lista; let i = index">
+                      <th *ngIf="modoLancamento" scope="row">
+                        <input name="check{{i}}" type="checkbox" [(ngModel)]="sabor.selecionado" [disabled]="sabor.bloqueado" (change)="verificarQuantidades()" />
+                      </th>
+                      <th scope="row">{{ sabor.id }}</th>
+                      <td> {{ sabor.nome }} </td>
+                        <td *ngIf="!modoLancamento" > <button type="button" class="btn btn-primary" (click)="editar(modal1, sabor, i)">Editar</button> </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <td *ngIf="modoLancamento" > <button type="button" class="btn btn-primary" (click)="lancamento()">Concluir</button> </td>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<ng-template #modal1 let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Modal title</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+
+        <app-saboresdetails [sabor]="objetoSelecionadoParaEdicao" (retorno)="addOuEditarSabor($event)" ></app-saboresdetails>
+
+    </div>
+
+</ng-template>

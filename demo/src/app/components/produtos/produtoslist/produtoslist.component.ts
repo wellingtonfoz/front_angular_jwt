@@ -45,24 +45,6 @@ export class ProdutoslistComponent {
 
   }
 
-  exemploErro() {
-
-    this.produtosService.exemploErro().subscribe({
-      next: lista => { // QUANDO DÁ CERTO
-        this.lista = lista;
-      },
-      error: erro => { // QUANDO DÁ ERRO
-        alert('Exemplo de tratamento de erro/exception! Observe o erro no console!');
-        console.error(erro);
-      }
-    });
-
-  }
-
-
-
-
-
 
   // MÉTODOS DA MODAL
 
@@ -84,7 +66,7 @@ export class ProdutoslistComponent {
 
     this.listAll();
 
-    this.modalService.dismissAll();
+    this.modalRef.dismiss();
   }
 
 

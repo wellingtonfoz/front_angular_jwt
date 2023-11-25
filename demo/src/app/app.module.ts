@@ -14,6 +14,9 @@ import { PedidosdetailsComponent } from './components/pedidos/pedidosdetails/ped
 import { ProdutoslistComponent } from './components/produtos/produtoslist/produtoslist.component';
 import { ProdutosdetailsComponent } from './components/produtos/produtosdetails/produtosdetails.component';
 import { httpInterceptorProviders } from './interceptors/httpinterceptor.service';
+import { SaboreslistComponent } from './components/sabores/saboreslist/saboreslist.component';
+import { SaboresdetailsComponent } from './components/sabores/saboresdetails/saboresdetails.component';
+import { DashboardComponent } from './components/layout/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +28,10 @@ import { httpInterceptorProviders } from './interceptors/httpinterceptor.service
     PedidoslistComponent,
     PedidosdetailsComponent,
     ProdutoslistComponent,
-    ProdutosdetailsComponent
+    ProdutosdetailsComponent,
+    SaboreslistComponent,
+    SaboresdetailsComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

@@ -1,7 +1,7 @@
-import { Produto } from "./produto";
+import { PedidoProduto } from "./pedidoproduto";
 
 export class Pedido {
     id!: number;
     obs!: string;
-    produtos!: Produto[];
+    pedidoProdutoList!: PedidoProduto[];
 }

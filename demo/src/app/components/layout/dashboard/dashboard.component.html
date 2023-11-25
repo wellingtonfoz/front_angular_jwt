@@ -1,0 +1,30 @@
+<div class="container">
+  <h1>dashboard!</h1>
+
+  <div class="row">
+
+    <div class="col-lg-4" *ngFor="let aux of [1,2,3]">
+      <div class="todos">Informações que aparecem para todos</div>
+    </div>
+
+  </div>
+
+
+  <div class="row" *ngIf="loginService.hasPermission('ADMIN')">
+
+    <div class="col-lg-4" *ngFor="let aux of [1,2,3]">
+      <div class="admin">Informações que só aparecem para usuários de ROLE ADMIN</div>
+    </div>
+
+  </div>
+
+
+  <div class="row" *ngIf="loginService.hasPermission('USER')">
+
+    <div class="col-lg-4" *ngFor="let aux of [1,2,3]">
+      <div class="user">Informações que só aparecem para usuários de ROLE USER</div>
+    </div>
+
+  </div>
+
+</div>

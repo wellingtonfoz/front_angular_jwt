@@ -3,6 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { Login } from '../models/login';
 import { User } from '../models/user';
 import { Observable } from 'rxjs';
+import { jwtDecode, JwtPayload } from "jwt-decode";
 
 @Injectable({
   providedIn: 'root'
@@ -20,21 +21,38 @@ export class LoginService {
   }
 
   deslogar(): Observable<any> {
-    return this.http.get<any>(this.API+'/deslogar');
+    return this.http.get<any>(this.API + '/deslogar');
   }
 
 
 
-  addToken(token: string){
+  addToken(token: string) {
     localStorage.setItem('token', token);
   }
 
-  removerToken(){
+  removerToken() {
     localStorage.removeItem('token');
   }
 
-  getToken(){
+  getToken() {
     return localStorage.getItem('token');
+  }
+
+
+  jwtDecode() {
+    let token = this.getToken();
+    if (token) {
+      return jwtDecode<JwtPayload>(token);
+    }
+    return "";
+  }
+
+  hasPermission(role: string) {
+    let user = this.jwtDecode() as User;
+    if (user.role == role)
+      return true;
+    else
+      return false;
   }
 
 

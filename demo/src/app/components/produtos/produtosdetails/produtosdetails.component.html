@@ -1,12 +1,27 @@
 <form name="formulario" (ngSubmit)="salvar()">
-    <div class="mb-3">
-        <label for="exampleInputText1" class="form-label">Nome:</label>
-        <input type="text" class="form-control" name="exampleInputText1" aria-describedby="emailHelp"
-            [(ngModel)]="produto.nome">
-    </div>
-    <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">Valor:</label>
-        <input type="number" class="form-control" name="exampleInputPassword1" [(ngModel)]="produto.valor">
-    </div>
-    <button name="botao" type="submit" class="btn btn-primary">Salvar</button>
+  <div class="mb-3">
+    <label for="exampleInputText1" class="form-label">Nome:</label>
+    <input required type="text" class="form-control" name="exampleInputText1" aria-describedby="emailHelp"
+      [(ngModel)]="produto.nome">
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">Valor:</label>
+    <input type="number" class="form-control" name="exampleInputPassword1" [(ngModel)]="produto.valor">
+  </div>
+
+  <div class="form-check">
+    <input class="form-check-input" name="check" type="checkbox" value="" id="flexCheckChecked"
+      [(ngModel)]="produto.temSabores">
+    <label class="form-check-label" for="flexCheckChecked">
+      Permitir selecionar sabores
+    </label>
+  </div>
+  <br>
+
+  <div class="mb-3" *ngIf="produto.temSabores">
+    <label for="exampleInputmasab" class="form-label">Máximo de sabores neste produto:</label>
+    <input required type="number" class="form-control" name="exampleInputmasab" [(ngModel)]="produto.maximoSabores">
+  </div>
+
+  <button name="botao" type="submit" class="btn btn-primary">Salvar</button>
 </form>

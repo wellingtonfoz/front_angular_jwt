@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild, inject } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Pedido } from 'src/app/models/pedido';
+import { PedidoProduto } from 'src/app/models/pedidoproduto';
 import { Produto } from 'src/app/models/produto';
 import { PedidosService } from 'src/app/services/pedidos.service';
 
@@ -18,6 +19,9 @@ export class PedidosdetailsComponent {
   modalRef!: NgbModalRef;
 
   pedidosService = inject(PedidosService);
+
+  @ViewChild('modalSabores') modalSabores!: ElementRef;
+  pedidoProdutoSelecionado: PedidoProduto = new PedidoProduto();
 
 
   constructor() {
@@ -42,24 +46,39 @@ export class PedidosdetailsComponent {
   }
 
 
-  excluir(produto: Produto, indice: number) {
+  excluir(indice: number) {
 
-    this.pedido.produtos.splice(indice,1);
-    
+    this.pedido.pedidoProdutoList.splice(indice, 1);
+
   }
 
   retornoProdutosList(produto: Produto) {
 
-    if (this.pedido.produtos == null)
-      this.pedido.produtos = [];
+    if (this.pedido.pedidoProdutoList == null)
+      this.pedido.pedidoProdutoList = [];
 
-    this.pedido.produtos.push(produto);
+    let pedidoProduto = new PedidoProduto();
+    pedidoProduto.produto = produto;
+
+    this.pedido.pedidoProdutoList.push(pedidoProduto);
     this.modalRef.dismiss();
-}
+
+    if (produto.temSabores) {
+      this.pedidoProdutoSelecionado = pedidoProduto;
+      this.lancar(this.modalSabores, 'md');
+    }
+  }
+
+  retornoSaboresList(sabores: any) {
+
+    this.pedidoProdutoSelecionado.sabores = sabores;
+    this.modalRef.dismiss();
+
+  }
 
 
-  lancar(modal: any) {
-    this.modalRef = this.modalService.open(modal, { size: 'lg' });
+  lancar(modal: any, tamanhoJanela: string = 'lg') {
+    this.modalRef = this.modalService.open(modal, { size: tamanhoJanela });
   }
 
 }

@@ -23,12 +23,12 @@ export class HttpRequestInterceptor implements HttpInterceptor {
   }
 
 
-  
+
 
   private errorHandler(err: HttpErrorResponse): Observable<any> {
     if (err.status === 401) {
       alert('401 - tratar');
-      this.router.navigateByUrl(`/login`);
+      this.router.navigate(['/login']);
       return of(err.message);
     } else if (err.status === 403) {
       alert('403 - tratar');
