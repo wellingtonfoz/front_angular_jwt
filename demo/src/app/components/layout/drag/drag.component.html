@@ -1,1 +1,56 @@
-<p>drag works!</p>
+<div class="container">
+<br>
+  <h3>Arraste os itens <b>DO MEIO</b> para sua categoria:</h3><br>
+
+  <div cdkDropListGroup class="row">
+
+
+
+    <div class="col-lg-2">
+      <h2>Animal</h2>
+
+      <div id="animal" cdkDropList [cdkDropListData]="animais" class="example-list" (cdkDropListDropped)="drop($event)" (mouseover)="onDragOver($event)" (mouseout)="onDragOut($event)">
+        <div *ngFor="let item of animais" class="example-box" cdkDrag (cdkDragStarted)="arrastando = true" (cdkDragEnded)="arrastando = false">
+          <img [src]="item.url" />
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3"> <br> </div>
+
+
+
+    <div class="col-lg-2">
+      <h2>Lista</h2>
+
+      <div id="lista" cdkDropList [cdkDropListData]="lista" class="example-list" (cdkDropListDropped)="drop($event)">
+        <div *ngFor="let item of lista" class="example-box" cdkDrag (cdkDragStarted)="arrastando = true" (cdkDragEnded)="arrastando = false">
+          <img [src]="item.url" />
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3"> <br> </div>
+
+
+
+    <div class="col-lg-2">
+      <h2>Carro</h2>
+
+      <div id="carro" cdkDropList [cdkDropListData]="carros" class="example-list" (cdkDropListDropped)="drop($event)" (mouseover)="onDragOver($event)" (mouseout)="onDragOut($event)">
+        <div *ngFor="let item of carros" class="example-box" cdkDrag (cdkDragStarted)="arrastando = true" (cdkDragEnded)="arrastando = false">
+          <img [src]="item.url" />
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+<br>
+  <h3>Acertos: <b>{{acertos}}</b></h3>
+  <h3>Erros: <b>{{erros}}</b></h3>
+  <h3>{{mensagemColisao}} </h3>
+  <h3 *ngIf="arrastando">Arrastando! </h3>
+
+
+
+
+</div>

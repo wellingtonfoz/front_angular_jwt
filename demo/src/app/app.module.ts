@@ -16,8 +16,9 @@ import { httpInterceptorProviders } from './interceptors/httpinterceptor.service
 import { SaboreslistComponent } from './components/sabores/saboreslist/saboreslist.component';
 import { SaboresdetailsComponent } from './components/sabores/saboresdetails/saboresdetails.component';
 import { DashboardComponent } from './components/layout/dashboard/dashboard.component';
-import { DragDropModule } from '@angular/cdk/drag-drop';
 import { DragComponent } from './components/layout/drag/drag.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { CdkDrag,CdkDropList,CdkDropListGroup} from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,12 @@ import { DragComponent } from './components/layout/drag/drag.component';
     AppRoutingModule,
     NgbModule,
     HttpClientModule,
+
     DragDropModule,
+    CdkDropListGroup,
+    CdkDropList,
+    CdkDrag
+
   ],
   providers: [
     httpInterceptorProviders
