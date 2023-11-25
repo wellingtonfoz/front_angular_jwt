@@ -5,12 +5,14 @@ import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Produto } from 'src/app/models/produto';
 import { By } from '@angular/platform-browser';
-import { HttpClient } from '@angular/common/http';
-import { of } from 'rxjs';
+import { ProdutosService } from 'src/app/services/produtos.service';
 
 describe('ProdutosdetailsComponent', () => {
   let component: ProdutosdetailsComponent;
   let fixture: ComponentFixture<ProdutosdetailsComponent>;
+
+  let produtosService: ProdutosService;
+
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -53,28 +55,38 @@ describe('ProdutosdetailsComponent', () => {
   });
 
 
-  beforeEach(() => { //MOCANDO DADOS
-    let produto = new Produto();
-    produto.id = 1;
-    produto.nome = 'Pizza';
-    produto.valor = 456;
-
-    const httpSpy = TestBed.inject(HttpClient)
-    spyOn(httpSpy, 'post').and.returnValue(of(produto));
-    spyOn(httpSpy, 'put').and.returnValue(of(produto));
-
-    fixture.detectChanges(); //refresh
+  beforeEach(() => {
+    produtosService = TestBed.inject(ProdutosService);
   });
 
+  it('deve chamar o método save ao enviar o formulário', fakeAsync(() => { //colocar o fakeAsync toda vez que rolar coisa assíncrona
+    let spy = spyOn(produtosService, 'save').and.callThrough();
 
-  it('Teste de @Output() retorno', fakeAsync(() => {
-    //let elemento = fixture.debugElement.query(By.css('button[name="botao"]'));
-    spyOn(component.retorno, 'emit');
-    //elemento.triggerEventHandler('click', null);
-    component.salvar();
-    expect(component.retorno.emit).toHaveBeenCalled();
+    let form = fixture.debugElement.nativeElement.querySelector('form');
+    form.dispatchEvent(new Event('ngSubmit')); //disparar o mesmo evento que tá configurado na tag
+
+    tick(); //simular uma demora assíncrona
+    fixture.detectChanges();
+    expect(spy).toHaveBeenCalled();
   }));
 
+
+  it('deve chamar o método save ao enviar o formulário passando objeto', fakeAsync(() => {
+    let spy = spyOn(produtosService, 'save').and.callThrough();
+
+    let produto = new Produto();
+    produto.nome = 'Pizza';
+    component.produto = produto;
+    fixture.detectChanges();
+
+    let form = fixture.debugElement.nativeElement.querySelector('form');
+    console.log(form);
+    form.dispatchEvent(new Event('ngSubmit'));
+
+    tick();
+    fixture.detectChanges();
+    expect(spy).toHaveBeenCalledWith(produto);
+  }));
 
 
 });

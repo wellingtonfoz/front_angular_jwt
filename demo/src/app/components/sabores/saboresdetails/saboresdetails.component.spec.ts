@@ -7,10 +7,13 @@ import { Sabor } from 'src/app/models/sabor';
 import { By } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
+import { SaboresService } from 'src/app/services/sabores.service';
 
 describe('SaboresdetailsComponent', () => {
   let component: SaboresdetailsComponent;
   let fixture: ComponentFixture<SaboresdetailsComponent>;
+
+  let saboresService: SaboresService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -51,28 +54,38 @@ describe('SaboresdetailsComponent', () => {
     expect(elemento.nativeElement.ngModel).not.toBe(null);
   });
 
-
-  beforeEach(() => { //MOCANDO DADOS
-    let sabor = new Sabor();
-    sabor.id = 1;
-    sabor.nome = 'Pizza';
-
-    const httpSpy = TestBed.inject(HttpClient)
-    spyOn(httpSpy, 'post').and.returnValue(of(sabor));
-    spyOn(httpSpy, 'put').and.returnValue(of(sabor));
-
-    fixture.detectChanges(); //refresh
+  beforeEach(() => {
+    saboresService = TestBed.inject(SaboresService);
   });
 
+  it('deve chamar o método save ao enviar o formulário', fakeAsync(() => { //colocar o fakeAsync toda vez que rolar coisa assíncrona
+    let spy = spyOn(saboresService, 'save').and.callThrough();
 
-  it('Teste de @Output() retorno', fakeAsync(() => {
-    //let elemento = fixture.debugElement.query(By.css('button[name="botao"]'));
-    spyOn(component.retorno, 'emit');
-    //elemento.triggerEventHandler('click', null);
-    component.salvar();
-    expect(component.retorno.emit).toHaveBeenCalled();
+    let form = fixture.debugElement.nativeElement.querySelector('form');
+    form.dispatchEvent(new Event('ngSubmit')); //disparar o mesmo evento que tá configurado na tag
+
+    tick(); //simular uma demora assíncrona
+    fixture.detectChanges();
+    expect(spy).toHaveBeenCalled();
   }));
 
+
+  it('deve chamar o método save ao enviar o formulário passando objeto', fakeAsync(() => {
+    let spy = spyOn(saboresService, 'save').and.callThrough();
+
+    let sabor = new Sabor();
+    sabor.nome = 'Catupiry';
+    component.sabor = sabor;
+    fixture.detectChanges();
+
+    let form = fixture.debugElement.nativeElement.querySelector('form');
+    console.log(form);
+    form.dispatchEvent(new Event('ngSubmit'));
+
+    tick();
+    fixture.detectChanges();
+    expect(spy).toHaveBeenCalledWith(sabor);
+  }));
 
 
 });

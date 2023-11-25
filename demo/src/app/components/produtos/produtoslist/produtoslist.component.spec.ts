@@ -26,12 +26,7 @@ describe('ProdutoslistComponent', () => { //GRUPO DE TESTES DE UM COMPONENTE
   it('Teste 1 - criação ok do componente', () => {
     expect(component).toBeTruthy();
   });
-/*
-  it('Teste 2 - existência da tag table', () =>{
-    const html = fixture.nativeElement as HTMLElement;
-    expect(html.querySelector('.container')?.textContent).toContain('table');
-  });
-*/
+
 
 
 });

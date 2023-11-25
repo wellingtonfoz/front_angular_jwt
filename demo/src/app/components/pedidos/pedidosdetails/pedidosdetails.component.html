@@ -1,64 +1,70 @@
 <form (ngSubmit)="salvar()">
-    <div class="mb-3">
-        <label for="exampleInputText1" class="form-label">Observações:</label>
-        <input type="text" class="form-control" name="exampleInputText1" aria-describedby="emailHelp"
-            [(ngModel)]="pedido.obs">
-    </div>
+  <div class="mb-3">
+    <label for="exampleInputText1" class="form-label">Observações:</label>
+    <input type="text" class="form-control" name="exampleInputText1" aria-describedby="emailHelp"
+      [(ngModel)]="pedido.obs">
+  </div>
 
-    <button type="button" class="btn btn-primary" (click)="lancar(modalProdutos)">Lançar produto</button>
+  <button type="button" class="btn btn-primary" (click)="lancar(modalProdutos)">Lançar produto</button>
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col">#ID</th>
-                <th scope="col">Nome</th>
-                <th scope="col">Valor</th>
-                <th scope="col">Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let pedidoProduto of pedido.pedidoProdutoList; let i = index">
-                <th scope="row">{{ pedidoProduto.produto.id }}</th>
-                <td> {{ pedidoProduto.produto.nome }} </td>
-                <td> {{ pedidoProduto.produto.valor }} </td>
-                <td> <button type="button" class="btn btn-primary" (click)="excluir(i)">Excluir</button> </td>
-            </tr>
-        </tbody>
-    </table>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#ID</th>
+        <th scope="col">Nome</th>
+        <th scope="col">Valor</th>
+        <th scope="col">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let pedidoProduto of pedido.pedidoProdutoList; let i = index">
+        <th scope="row">{{ pedidoProduto.produto.id }}</th>
+        <td>
+          {{ pedidoProduto.produto.nome }}
+          <ul>
+            <li *ngFor="let sabor of pedidoProduto.sabores">{{sabor.nome}}</li>
+          </ul>
+        </td>
+        <td> {{ pedidoProduto.produto.valor }} </td>
+        <td> <button type="button" class="btn btn-primary" (click)="excluir(i)">Excluir</button> </td>
+      </tr>
+    </tbody>
+  </table>
 
 
 
-    <button type="submit" class="btn btn-primary">Salvar</button>
+  <button type="submit" class="btn btn-primary">Salvar</button>
 </form>
 
 
 
 
 <ng-template #modalProdutos let-modal>
-    <div class="modal-header">
-        <h4 class="modal-title">Modal title</h4>
-        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-    </div>
-    <div class="modal-body">
+  <div class="modal-header">
+    <h4 class="modal-title">Modal title</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
 
-        <app-produtoslist [modoLancamento]="true" (retorno)="retornoProdutosList($event)" ></app-produtoslist>
+    <app-produtoslist [modoLancamento]="true" (retorno)="retornoProdutosList($event)"></app-produtoslist>
 
-    </div>
+  </div>
 
 </ng-template>
 
 
 <ng-template #modalSabores let-modal>
   <div class="modal-header">
-      <h4 class="modal-title">Sabores para: <b class="text-primary">{{pedidoProdutoSelecionado.produto.nome}}</b></h4>
-      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    <h4 class="modal-title">Sabores para: <b class="text-primary">{{pedidoProdutoSelecionado.produto.nome}}</b></h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
   </div>
   <div class="modal-body">
 
-      <app-saboreslist [modoLancamento]="true" [produto]="pedidoProdutoSelecionado.produto" (retorno)="retornoSaboresList($event)" ></app-saboreslist>
+    <app-saboreslist [modoLancamento]="true" [produto]="pedidoProdutoSelecionado.produto"
+      (retorno)="retornoSaboresList($event)"></app-saboreslist>
 
   </div>
   <div class="modal-footer">
-      <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
   </div>
 </ng-template>

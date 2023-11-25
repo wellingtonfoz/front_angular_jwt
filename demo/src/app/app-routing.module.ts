@@ -7,6 +7,7 @@ import { PedidoslistComponent } from './components/pedidos/pedidoslist/pedidosli
 import { rotaguardGuard } from './guards/rotaguard.guard';
 import { SaboreslistComponent } from './components/sabores/saboreslist/saboreslist.component';
 import { DashboardComponent } from './components/layout/dashboard/dashboard.component';
+import { DragComponent } from './components/layouts/drag/drag.component';
 
 const routes: Routes = [
   { path: "", redirectTo: "login", pathMatch: 'full' },
@@ -17,6 +18,7 @@ const routes: Routes = [
       { path: "pedidos", component: PedidoslistComponent },
       { path: "produtos", component: ProdutoslistComponent },
       { path: "sabores", component: SaboreslistComponent },
+      { path: "drag", component: DragComponent },
     ]
   }
 
